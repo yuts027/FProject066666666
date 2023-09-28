@@ -1,0 +1,127 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IEnumerable<FProjectCampingBackend.Models.ViewModels.Orders.OrderVm>
+
+@{
+    ViewBag.Title = "訂單管理";
+}
+
+<h2>訂單管理</h2>
+
+<div class="mb-3" style="width:100%">
+    <form action="" method="get">
+        <div class="" style="width: 100%; display: flex; flex-wrap: wrap; align-items: center;">
+
+            <div>
+                訂單編號:@Html.TextBox("OrderNumber", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;" })
+            </div>
+            <div>
+                訂購人:@Html.TextBox("Name", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;" })
+            </div>
+            <div>
+                訂單狀態:@Html.DropDownList("Status", ViewData["Status"] as SelectList, null, new { @class = "form-select form select-sm me-3 ms-3", style = "width:auto;display:inline-block;" })
+            </div>
+            <div>
+                訂單時間:
+                @Html.TextBox("FirstTime", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;", type = "date" })
+                @Html.TextBox("EndTime", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;", type = "date" })
+            </div>
+
+            <div>
+                <input type="submit" value="查詢" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped">
+
+    <tr class="table-dark">
+        <th>
+            @Html.DisplayNameFor(model => model.OrderNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Member)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-dark" }) |
+                @Html.ActionLink("詳細資訊", "Details", new { id = item.Id }, new { @class = "btn btn-dark" }) 
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }))
+
+@section css{
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <style>
+        .pagination-container {
+            text-align: right;
+        }
+
+        .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+            background-color: #4c4c4c;
+        }
+
+        a {
+            color: #000000;
+        }
+    </style>
+
+}

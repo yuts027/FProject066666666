@@ -1,0 +1,90 @@
+/*共用 */
+body {
+    background: #f9e4da;
+}
+
+html {
+    background: #b99577;
+}
+a {
+    text-decoration: none;
+}
+
+
+/* class內加上這個可以 */
+.hometitle {
+    font-family: 'Kaisei Tokumin', serif;
+}
+/* 選單 */
+.nav-item img{
+    width: 20px;
+    height: auto;
+}
+
+/* NAV背景色 */
+.nav_bg{
+    background: rgb(98 44 0);
+}
+
+/* 右邊會員專區設定 */
+.memberNav a{
+    margin:0 3px;
+    text-decoration: none;
+}
+.memberNav a:hover{
+    text-decoration: underline;
+}
+
+/*登出*/
+    .memberNav a.logoutbtn {
+          border:1px solid #FFF;
+          padding:0 5px;
+          border-radius:5px;
+    }
+
+    .memberNav a.logoutbtn:hover {
+        text-decoration:none;
+        background:#95775e;
+    }
+
+
+footer {
+    padding: 1% 0;
+    text-align: center;
+    background: #b99577;
+    
+}
+footer img{
+    width: 100%;
+    height: auto;
+    max-width:150px;
+}
+footer br{
+    display: none;
+}
+.pwdarea {
+    position: relative;
+}
+
+.togglePassword {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+@media screen and (max-width: 1024px) {
+    body .container {
+        max-width: 1024px;
+    }
+
+} 
+
+@media screen and (max-width: 768px) {
+    footer  {
+        padding: 1% 10%;
+        text-align: center;
+    }
+    footer br{
+        display: block;
+    }
+
+} 

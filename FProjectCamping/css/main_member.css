@@ -1,0 +1,91 @@
+.main {
+    padding-top: 60px;
+    background-image: url(../images/home_bg.png);
+    background-repeat: repeat;
+    background-position: top;
+    background-size: 100%;
+}
+
+.memberName {
+    color: #930;
+    font-weight: bold;
+}
+
+.memberarea {
+    padding: 5% 0 3%;
+}
+
+    .memberarea a {
+        color: #000;
+    }
+
+.memberinner {
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #b7b7b7;
+    padding: 1%;
+    background: #FFF;
+    margin: 1% 0 6%;
+    min-height:650px;
+}
+
+    .memberinner ul {
+        list-style: none;
+        padding: 0 5%;
+    }
+
+        .memberinner ul li.innernav {
+            padding: 3% 0;
+            font-size: 1.2rem;
+        }
+
+    .memberinner img {
+        width: 100%;
+        height: auto;
+    }
+
+    .memberinner .memberimg {
+        margin: 0 auto;
+        max-width: 200px;
+        height: 200px;
+        background: #FFF;
+        position: relative;
+    }
+
+        .memberinner .memberimg img {
+            border-radius: 50%;
+            border: 1px solid;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: url("../images/camping_no.jpg");
+            background-size: contain;
+        }
+
+.membericon {
+    position: absolute;
+    bottom: 2%;
+    right: 15%;
+    background: #000000;
+    color: #FFF;
+    padding: 4px 10px;
+    border-radius: 50%;
+}
+
+.righttitle {
+    padding: 2% 0;
+}
+
+.align-content-space-between {
+    align-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .memberinner .memberimg {
+        max-width: 150px;
+        height: 150px;
+    }
+
+    .main {
+        background-image: none;
+    }
+}

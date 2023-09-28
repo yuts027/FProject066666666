@@ -1,0 +1,123 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IEnumerable<FProjectCampingBackend.Models.ViewModels.RoomsVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>房型管理</h2>
+
+
+<div class="mb-3" style="width:100%">
+    <form action="" method="get">
+        <div class="" style="width: 100%; display: flex; flex-wrap: wrap; align-items: center;">
+
+
+
+            @*<div>
+                營區房型:@Html.DropDownList("RoomName", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;" })
+            </div>*@
+
+        </div>
+    </form>
+</div>
+<table class="table table-striped">
+
+    <tr class="table-dark">
+        <th>
+            @Html.DisplayNameFor(model => model.RoomTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.WeekendPrice)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.WeekdayPrice)
+        </th>
+
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelitem => item.RoomTypeName)
+            </td>
+            <td class="roomsPhoto">
+
+                @if (item.Photo == null)
+                {
+                    <img src="/images/camping_no.jpg" alt="pic" class="img-fluid ">
+                }
+                else
+                {
+                    <img src="/files/@Html.DisplayFor(modelItem => item.Photo)" alt="" class="img-fluid " />
+
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.RoomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Description)
+            </td>
+            <td>
+                @string.Format("${0}", Html.DisplayFor(modelitem => item.WeekendPrice))
+            </td>
+            <td>
+                @string.Format("${0}", Html.DisplayFor(modelitem => item.WeekdayPrice))
+            </td>
+           
+
+            <td>
+                <i class="bi bi-pen-fill"></i>
+                @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "" })
+            </td>
+        </tr>
+    }
+</table>
+
+
+@Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }))
+
+@section css{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <style>
+        .roomsPhoto {
+            max-width: 100px;
+            height: 80px;
+            position: relative;
+        }
+        .roomsPhoto img{
+             max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .pagination-container {
+            text-align: right;
+        }
+
+        .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+            background-color: #4c4c4c;
+        }
+
+        a {
+            color: #000000;
+        }
+    </style>
+}

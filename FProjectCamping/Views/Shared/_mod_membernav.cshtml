@@ -1,0 +1,32 @@
+﻿
+<div class="col-lg-4 p-2">
+    <ul class="row text-center">
+        <li class="col-lg-12 innernav ">
+            <h2 class="mb-0 hometitle">會員專區</h2>
+            <p class="mb-0 memberName">Hi, @Model.Name</p>
+        </li>
+
+        <li class="col-lg-12 innernav">
+            <div class="memberimg">
+                <a href="/Members/EditPhoto/"><i class="bi bi-pen membericon"></i></a>
+                @if (string.IsNullOrEmpty(Model.Photo))
+                {
+                    <img src="~/images/camping_no.jpg" alt="大頭照" class="img-fluid" id="filePreview">
+                }
+                else
+                {
+                    <img src="/files/@Model.Photo" alt="大頭照" class="img-fluid" id="filePreview">
+                
+                }
+
+
+            </div>
+
+        </li>
+        <li class="col-lg-12 border-bottom innernav"><i class="bi bi-person-circle pe-1"></i><a href="/Members/EditProfile/">個人資料</a></li>
+        <li class="col-lg-12 border-bottom innernav"><i class="bi bi-card-list pe-1"></i><a href="/Members/MyOrders/">訂單查詢</a></li>
+        <li class="col-lg-12 border-bottom innernav"><i class="bi bi-arrow-repeat pe-1"></i><a href="/Members/EditPassword/">修改密碼</a></li>
+        <li class="col-lg-12 border-bottom innernav"> <i class="bi bi-arrow-bar-left pe-1"></i> @Html.ActionLink("登出", "Logout", "Members", new { area = "" })</li>
+
+    </ul>
+</div>

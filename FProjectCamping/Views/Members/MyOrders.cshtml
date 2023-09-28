@@ -1,0 +1,124 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IEnumerable<FProjectCamping.Models.ViewModels.Members.MyOrder>
+
+@{
+    ViewBag.Title = "訂單紀錄";
+    var member = ViewBag.CurrentMember as FProjectCamping.Models.EFModels.Member;
+}
+
+@section css{
+
+    <link rel="stylesheet" href="~/css/main_member.css">
+    <link rel="stylesheet" href="~/css/OrderHistory.css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+}
+
+<div class="container">
+
+    <div class="memberarea">
+
+        <div class="row memberinner justify-content-around">
+            @{
+                Html.RenderPartial("_mod_membernav", member);
+            }
+            <div class="col-lg-8 ps-4 pe-4 row align-content-space-between">
+
+                <div class="row align-items-center">
+                    <div class="righttitle">
+                        <h3 class="border-bottom pb-3">訂單紀錄</h3>
+                    </div>
+                    <table class="table table-hover table-borderless ">
+                        <thead class="table-warning">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PaymentType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TotalPrice)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Status)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr data-bs-toggle="collapse" data-bs-target="#order_@item.Id" aria-expanded="false">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrderNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrderTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaymentType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                </tr>
+                                <tr id="order_@item.Id" class="collapse">
+                                    <td colspan="5">
+                                        訂單詳細
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>房型</th>
+                                                    <th>入住日</th>
+                                                    <th>退房日</th>
+                                                    <th>天數</th>
+                                                    <th>小計</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var items in item.OrderItems)
+                                                {
+                                                    <tr>
+
+                                                        <td>@items.RoomName</td>
+                                                        <td>@items.CheckInDate.ToString("yyyy/MM/dd")</td>
+                                                        <td>@items.CheckOutDate.ToString("yyyy/MM/dd")</td>
+                                                        <td>@items.Days</td>
+                                                        <td>@items.SubTotal</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.PagedListPager((IPagedList)Model, x => Url.Action("MyOrders", new { page = x }))
+                <!--頁面切換-->
+                @*<ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next" style=" font-weight: 900;">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>*@
+            </div>
+        </div>
+    </div>
+</div>

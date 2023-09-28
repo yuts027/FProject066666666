@@ -1,0 +1,216 @@
+﻿@model FProjectCamping.Models.ViewModels.Carts.CartVm
+
+@{
+    ViewBag.Title = "購物車";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/Progress.css">
+    <link rel="stylesheet" href="~/css/Cart.css" />
+}
+@using (Html.BeginForm("Cart", "Carts", FormMethod.Post))
+{
+    <div class="main">
+        <div class="container mt-5 mb-5">
+            <div class="cartarea">
+
+                <div class="cartPage">
+
+                    <!--進度條 begin-->
+                    <ul class="progressarea">
+                        <li class="active">購物車</li>
+                        <li>訂單資料</li>
+                        <li>建立訂單</li>
+                        <li>付款</li>
+                    </ul>
+                    <!--進度條 end-->
+                    <!-- 表格部分 -->
+                    <table class="tabledetail">
+                        <thead>
+                            <tr>
+                                <th>營區房型</th>
+                                <th>房號</th>
+                                <th>入住日</th>
+                                <th>退房日</th>
+                                <th>單價</th>
+                                <th>夜數</th>
+                                <th>加床</th>
+                                <th>加床金額</th>
+                                <th>金額</th>
+                                <th>移除</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            @if (Model.Items != null)
+                            {
+                                for (var i = 0; i < Model.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomName)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomNum)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckInDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckOutDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomPrice)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].Days)</td>
+                                        <td>
+                                            @Html.CheckBoxFor(model => model.Items[i].ExtraBed, new { onchange = "updateSubTotal(this, " + Model.Items[i].ExtraPrice + ")" })
+                                        </td>
+                                        <td data-extraPrice>@(Model.Items[i].ExtraBed ? Model.Items[i].ExtraBedPrice.ToString() : "0")</td>
+                                        <td data-subtotal>@Html.DisplayFor(model => model.Items[i].SubTotal)</td>
+                                        <td>
+                                            <button class="delete-button" onclick="removeRow(this, @Model.Items[i].SubTotal)">刪除</button>
+                                        </td>
+
+                                    </tr>
+                                <tr>
+                                    @*統一將欄位傳回後端更新*@
+                                    @Html.HiddenFor(model => model.Items[i].Id)
+                                    @Html.HiddenFor(model => model.Items[i].RoomTypeId)
+                                    @Html.HiddenFor(model => model.Items[i].RoomId)
+                                    @Html.HiddenFor(model => model.Items[i].CheckInDate)
+                                    @Html.HiddenFor(model => model.Items[i].CheckOutDate)
+                                    @Html.HiddenFor(model => model.Items[i].RoomPrice)
+                                    @Html.HiddenFor(model => model.Items[i].Days)
+                                    @Html.HiddenFor(model => model.Items[i].ExtraBed)
+                                    @Html.HiddenFor(model => model.Items[i].ExtraBedPrice)
+                                    @Html.HiddenFor(model => model.Items[i].SubTotal)
+                                </tr>
+
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="11">無資料</td>
+                            </tr>
+                        }
+                            </tbody>
+                        </table>
+
+                    <div class="totalArea">
+                        <span>小計：</span><span id="total" name="TotalPrice">@Model.TotalPrice</span>
+                    </div>
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.MemberAccount)
+                    @Html.HiddenFor(model => model.TotalPrice)
+                    <div class="bottomArea">
+                        <button type="button" id="back">上一頁</button>
+                        <button type="submit" id="next">下一頁</button>
+                    </div>
+                    <!-- 表格部分 -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section scripts{
+    @if (Model.Items == null)
+    {
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: '請至少預定一間房才可下一步！'
+            });
+        </script>
+    }
+    <script>
+ // 0925 rabbit
+        document.getElementById('back')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("Roomtype", "Rooms")';
+        });
+    </script>
+    <script>
+        //Swal.fire({
+        //    position: 'top-end',
+        //    icon: 'success',
+        //    title: 'Your work has been saved',
+        //    showConfirmButton: false,
+        //    timer: 1500
+        //})
+        // 取得全部的 subtotal 元素
+        var subTotalCells = document.querySelectorAll('[data-subtotal]');
+
+        // 取得顯示總金額的元素
+        var totalLabel = document.getElementById('total');
+
+        // 定義 MutationObserver
+        var mutationObserver = new MutationObserver(function (mutationsList) {
+            updateTotal();
+        });
+
+        // 監聽每個 subtotal 元素的變化
+        subTotalCells.forEach(function (subTotalCell) {
+            mutationObserver.observe(subTotalCell, { childList: true });
+        });
+
+        // 初次執行一次，讓畫面初始化有正確的金額
+        updateTotal();
+
+        // 更新總金額的函數
+        function updateTotal() {
+            var total = 0;
+
+            subTotalCells.forEach(function (subTotalCell) {
+                total += parseInt(subTotalCell.textContent);
+            });
+
+            // 更新顯示總金額的元素
+            totalLabel.textContent = total.toLocaleString();
+
+            var hiddenTotalPrice = document.getElementById("TotalPrice");
+            hiddenTotalPrice.value = total; // 更新值
+        }
+
+        // checkbox勾選 需更新 SubTotal
+        function updateSubTotal(checkbox, price) {
+            var row = checkbox.parentNode.parentNode;
+            var subTotalCell = row.querySelector('[data-subtotal]'); // SubTotal 的位置
+            var extraPriceCell = row.querySelector('[data-extraPrice]'); // ExtraPrice 的位置
+            var subTotal = parseInt(subTotalCell.textContent); // 當前 SubTotal 的值
+
+            var hiddenSubTotal = row.querySelector('[name*=".SubTotal"]');
+            var hiddenExtraBedPrice = row.querySelector('[name*=".ExtraBedPrice"]');
+
+            // 勾選 ExtraBed 加 SubTotal
+            if (checkbox.checked) {
+                subTotal += price;
+                extraPriceCell.textContent = price;
+                hiddenExtraBedPrice.value = price;
+            } else { // 如果取消勾選 ExtraBed，将 ExtraPrice 從 SubTotal 扣除
+                subTotal -= price;
+                extraPriceCell.textContent = 0;
+                hiddenExtraBedPrice.value = 0;
+            }
+
+            // 更新畫面上 SubTotal 的顯示值
+            subTotalCell.textContent = subTotal;
+            // 更新 hidden 的值
+            hiddenSubTotal.value = subTotal;
+
+        }
+
+        // 移除
+        function removeRow(button) {
+            // 移除選定的元素
+            // button的父元素的父元素
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+
+            // 更新 subtotal 的值，假設你的 subtotal 元素有一個 data-subtotal 屬性
+            var subTotalCell = row.querySelector('[data-subtotal]');
+            var currentSubTotal = parseInt(subTotalCell.textContent, 10);
+            subTotalCell.textContent = 0; // 將被刪除的行的 subtotal 設為 0
+
+            // 更新 total 的值
+            var total = document.getElementById("total");
+            var currentTotal = parseInt(total.textContent, 10);
+            var newTotal = currentTotal - currentSubTotal;
+
+            // 更新總金額
+            total.textContent = newTotal.toLocaleString();
+        }
+    </script>
+}

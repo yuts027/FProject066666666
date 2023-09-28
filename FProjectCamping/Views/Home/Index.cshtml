@@ -1,0 +1,328 @@
+﻿@{
+    ViewBag.Title = "首頁";
+    var news = ViewBag.News as FProjectCamping.Models.EFModels.News;
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <style>
+        .swiper {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 300px;
+        }
+
+            .swiper-slide img {
+                display: block;
+                width: 100%;
+            }
+    </style>
+}
+   
+
+<main>
+    <div class="main">
+        <div class="container-fuild container_carousel">
+            <!--輪播 begin-->
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></button>
+
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="~/images/photo1.jpg" class="d-block w-100 img-fluid" alt="活動1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/images/photo2.jpg" class="d-block w-100 img-fluid" alt="活動2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/images/photo3.jpg" class="d-block w-100 img-fluid" alt="活動3">
+                    </div>
+
+
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <!--輪播 end-->
+        </div>
+
+        <!-- 最新消息 -->
+        <div class="section1">
+            <div class="container">
+                <div class="news">
+                    <div class="newstitle hometitle">
+                        <div class="hotnews"><a href="/News/Index/"><i class="bi bi-bell-fill"></i><span>最新消息</span></a></div>
+                    </div>
+                    <div class="newsarea">
+                        @{
+                            foreach (var newsItem in Model)
+                            {
+                            <div class="description active">
+                                <div class="s1_title">
+                                    <a href="/News/Details/@newsItem.Id">
+                                        <p class="s1_item1">
+                                            <span class="s1_itemdate">@newsItem.CreatedTime.ToString("yyyy-MM-dd")</span><span class="s1_itemtitle">@newsItem.Title</span>
+                                        </p>
+                                        <p class="s1_item2"> @Html.Raw(@newsItem.Description)</p>
+                                    </a>
+                                </div>
+                            </div>
+                                }
+                            }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 關於我們 -->
+        <div class="section2" id="s2">
+            <div class="container">
+                <div class="s2_title">
+                    <p class="homesmtitle">About</p>
+                    <h1 class="hometitle">關於我們</h1>
+                    <p class="homesmtitle">來場度假之旅</p>
+                    <hr>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 s2_txt  align-items-center" data-aos="zoom-in" data-aos-duration="600">
+                        <h3>Camping放鬆村<br>是一個夢想園地<br>誠摯邀請你大膽作夢<br>離塵不離城，Let's go！</h3>
+                        <p>
+                            位處宜蘭，距離火車站只要30分鐘車程
+                            峽谷內溪流環繞，生態豐富；步道林蔭蔽天，不時更有台灣藍鵲造訪
+                        </p>
+                        <a href="/Rooms/Roomtype/"><i class="bi bi-calendar2-week"></i>&nbsp;預約去<i class="bi bi-hand-index-thumb-fill"></i></a>
+                    </div>
+                    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="150" data-aos-duration="600">
+                        <div class="ratio ratio-1x1">
+                            <iframe class=""
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.8381568806344!2d121.70983367490092!3d24.69808965173638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3467e3fc3c3053e9%3A0xc76f0b5d9a8d62ef!2zMjY25a6c6Jit57ij5LiJ5pif6YSJ5Lit6IiI6Lev5LiA5q61MzIy5be3MjDomZ8!5e0!3m2!1szh-TW!2stw!4v1693395268485!5m2!1szh-TW!2stw"></iframe>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 s2imgarea" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="600">
+                        <div class="mask">
+                            <h5 class="s2imgareatxt">歡樂夜晚氛圍</h5>
+                            <div class="s2imgareabg"></div>
+                            <img class="img-fluid" src="~/images/main_4p_2.jpg">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 s2imgarea" data-aos="zoom-in" data-aos-delay="350" data-aos-duration="600">
+                        <div class="mask">
+                            <h5 class="s2imgareatxt">寬廣的草皮</h5>
+                            <div class="s2imgareabg"></div>
+                            <img class="img-fluid" src="~/images/main_4p_1.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 探索我們的服務 -->
+        <div class="section3" id="s3">
+            <div class="container">
+                <div class="s3_title">
+                    <p class="homesmtitle">Explore</p>
+                    <h1 class="hometitle">探索我們的服務</h1>
+                    <p class="homesmtitle">給你最棒的體驗</p>
+                    <hr>
+                </div>
+
+                <div class="s3_descriprion" data-aos="fadeIn" data-aos-duration="1000">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-6 s3_2">
+                            <div><i class="bi bi-emoji-kiss-fill"></i></div>
+                            <div>
+                                <h4>場地租借</h4>
+                                <p>婚紗拍攝、員工旅遊、企業家庭日、記者會活動</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6 s3_2">
+                            <img class="img-fluid" src="~/images/campinglogo2.png">
+                        </div>
+
+                        <div class="col-lg-4 col-6 s3_2">
+                            <div><i class="fa-solid fa-tents"></i></div>
+                            <div>
+                                <h4>奢華露營</h4>
+                                <p>神殿帳及專屬衛浴帳，住宿、美食、活動全包式體驗，更採用高級舒適氣墊床、吹風機、冷氣</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-6 s3_2">
+                            <div><i class="bi bi-binoculars-fill"></i></div>
+                            <div>
+                                <h4>行程規劃</h4>
+                                <p>峽谷生態導覽、純用餐，半日/一日/多日遊</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-6 s3_2">
+                            <div><i class="fa-solid fa-utensils"></i></div>
+                            <div>
+                                <h4>美食餐飲</h4>
+                                <p>豐富美食等你來，高級食材搭配</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6 s3_2">
+                            <div><i class="bi bi-balloon-fill"></i></div>
+                            <div>
+                                <h4>娛樂</h4>
+                                <p>各式網美鞦韆、小孩遊戲區、球具租借</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <!-- 園區介紹 -->
+        <div class="section4" id="s4">
+
+            <div class="container">
+                <div class="s4_title">
+                    <p class="homesmtitle">Introduce</p>
+                    <h1 class="hometitle">園區介紹</h1>
+                    <p class="homesmtitle">營區、設施、活動</p>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="container_fuild">
+
+                <div class="s4area">
+                    <div class="s4_pic" data-aos="fade-down" data-aos-delay="300" data-aos-duration="1000">
+                        <div class="image-container">
+                            <img class="col img-fluid" src="~/images/s4_pic1.jpg">
+                            <div class="overlay">
+                                <h3>河畔區<br>雙人房/家庭房</h3>
+                                <a href="#">
+                                    <p class="more">看更多</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s4_pic" data-aos="fade-down" data-aos-delay="200" data-aos-duration="1000">
+                        <div class="image-container">
+                            <img class="col img-fluid" src="~/images/s4_pic2.jpg">
+                            <div class="overlay">
+                                <h3>森林區<br>雙人房/家庭房</h3>
+                                <a href="#">
+                                    <p class="more">看更多</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s4_pic" data-aos="fade-down" data-aos-delay="100" data-aos-duration="1000">
+                        <div class="image-container">
+                            <img class="col img-fluid" src="~/images/s4_pic3.jpg">
+                            <div class="overlay">
+                                <h2>手作DIY</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s4_pic" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+                        <div class="image-container">
+                            <img class="col img-fluid" src="~/images/s4_pic5.jpg">
+                            <div class="overlay">
+
+                                <h2>網美盪鞦韆</h2>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s4_pic" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                        <div class="image-container">
+                            <img class="col img-fluid" src="~/images/s4_pic4.jpg">
+                            <div class="overlay">
+
+                                <h2>歡樂營火趣</h2>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="s4_pic" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+                        <div class="image-container">
+                            <img class="col img-fluid" src="~/images/s4_pic6.jpg">
+                            <div class="overlay">
+                                <h2>孩童嬉戲區</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="#" id="gotop">
+        <i class="bi bi-arrow-up-short d-6"></i>
+    </a>
+    <a href="/Rooms/Roomtype/" id="booking">
+        <i class="bi bi-calendar2-week"></i>&nbsp;預約去
+    </a>
+</main>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <script src="~/js/main.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true, // 啟用無限輪播
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            autoplay: {
+
+                disableOnInteraction: false,
+            },
+        });
+    </script>
+}

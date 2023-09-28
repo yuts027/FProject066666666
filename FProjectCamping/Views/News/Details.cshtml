@@ -1,0 +1,43 @@
+﻿@model FProjectCamping.Models.EFModels.News
+
+@{
+    ViewBag.Title = "Details";
+}
+@section css{
+
+ 
+    <link href="~/css/main_news.css" rel="stylesheet" />
+
+}
+
+
+<div class="titleimg"><img src="~/Images/photo3.jpg" alt="News" class="img-fluid" /></div>
+
+<div>
+
+    <div class="container">
+
+        <div class="row justify-content-center newsmain detials">
+            <div class="mb-2">
+
+                <div class="col-12 newsarea p-3 fs-4">
+
+                    <div class="newstitle">@Html.DisplayFor(model => model.Title)</div>
+                    <div class="newsdate">
+                        @Model.CreatedTime.ToString("yyyy/MM/dd")
+                    </div>
+
+                    <div class="description">
+                        @Html.Raw(Model.Description)
+                    </div>
+
+                    <div class="btnback ">@Html.ActionLink("<回最新消息", "Index")</div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

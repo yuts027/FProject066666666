@@ -1,0 +1,59 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IEnumerable<FProjectCamping.Models.EFModels.News>
+@{
+    ViewBag.Title = "Index";
+}
+@section css{
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/css/main_news.css" rel="stylesheet" />
+}
+
+
+<div class="titleimg"><img src="~/Images/photo3.jpg" alt="News" class="img-fluid" /></div>
+
+
+<div class="container">
+
+    <div class="row justify-content-center newsmain">
+        <div class="col-lg-6 col-md-12 mb-2 rightarea">
+            <div class="row newsrow">
+                <h3  class="hometitle newsmaintitle"><i class="bi bi-bell-fill"></i>最新消息</h3>
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 newsarea">
+                        <div class="newsdate">@item.CreatedTime.ToString("yyyy/MM/dd")</div>
+                        <a href="/News/Details/@item.Id">
+                            <div class="newstitle">@Html.DisplayFor(modelItem => item.Title)</div>
+                        </a>
+                    </div>
+                }
+
+
+            </div>
+            @Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }))
+        </div>
+        <div class="col-lg-6 col-md-12">
+
+            <div class="photoarea bn-btm" style="padding:3% 0;">
+                <div class="page-inner">
+                    <div class="product-img row">
+                        <img src="/Images/news_camping.jpg" alt="">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+

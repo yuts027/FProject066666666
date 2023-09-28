@@ -1,0 +1,61 @@
+
+.memberPhoto {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    margin: 0 auto;
+}
+
+
+    .memberPhoto img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.mainright_title {
+    border-bottom: #000 1px solid;
+    margin-bottom: 3%;
+    text-align: left;
+}
+
+.editarea {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 2%;
+    border-radius: 21px;
+    box-shadow: 1px 1px 10px #d4d4d4;
+    border: 1px solid;
+    margin: 4% 0;
+}
+
+.editleftarea {
+    width: 30%;
+    padding: 2%;
+}
+
+.editrightarea {
+    font-size: 1.3rem;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+.right1 {
+    width: 50%;
+}
+
+.right2 {
+    width: 30%;
+}
+
+.right3 {
+    width: 65%;
+}
+
+.mainright {
+    width: 70%;
+    padding: 2%;
+}

@@ -1,0 +1,95 @@
+.main {
+    padding-top: 60px;
+}
+
+.memberarea {
+    background: #FFF;
+    padding: 1%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #b7b7b7;
+    margin: 4% auto;
+}
+
+.memberinner ul {
+    list-style: none;
+    padding: 0 5%;
+}
+
+    .memberinner ul li {
+        padding: 3% 0;
+    }
+
+.memberinner img {
+    width: 100%;
+    height: auto;
+}
+
+.memberinner .memberimg {
+    margin: 0 auto;
+    max-width: 200px;
+    height: 200px;
+    background: #FFF;
+}
+
+    .memberinner .memberimg img {
+        border-radius: 50%;
+        border: 1px solid;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.registertitle {
+    padding: 2% 0 0;
+}
+
+#memberPhoto {
+    background: #FFF;
+}
+
+.memberleft-img {
+    max-width: 600px;
+    margin: 0 auto;
+    border-right: 1px solid #bdbdbd;
+}
+
+.memberightarea {
+    margin: 0 auto;
+   
+}
+.memberightarea.login{
+    max-width:480px;
+}
+
+
+
+.confirmarea {
+    margin: 0 auto;
+    max-width: 400px;
+    text-align: center;
+    font-size: 1.5rem;
+    padding:2% 0;
+}
+
+
+
+@media (max-width: 992px) {
+    .memberleft-img {
+        border-right: none;
+        display: none;
+    }
+
+
+}
+
+
+
+@media (max-width: 768px) {
+    .memberightarea {
+        margin: 0 auto;
+    }
+
+    .memberarea {
+        width: 100%;
+    }
+}

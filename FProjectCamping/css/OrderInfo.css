@@ -1,0 +1,81 @@
+.orderInfoPage {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    padding: 2% 1%;
+}
+
+.orderInfoarea {
+    padding: 3% 0;
+    background: #ffe2ce;
+    box-shadow: 1px 1px 10px #b7b7b7;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+.buyerInfo {
+    width: 70%;
+    display: flex;
+}
+
+.buyerInfo-memo {
+    margin-left: 20px;
+    margin-top: 45px;
+    display: flex;
+}
+
+#memo {
+    height: 100px;
+    width: 300px;
+}
+
+label span {
+    color: red;
+}
+
+label[for="name"] {
+    padding-right: 31px; /* 使用2個字符的寬度作為內邊距 */
+}
+
+/*優惠券 & 結帳區*/
+.calPrice {
+    border-bottom: 2px solid #884d25; /* 添加2像素粗的黑色底線，您可以根據需要調整顏色和粗細 */
+    padding-bottom: 10px; /* 可選：添加一些底部內邊距以增加間距 */
+    margin: 2% 0;
+    text-align: right;
+}
+
+.coupon {
+    display: flex;
+    align-items: center;
+    align-content: flex-end;
+    flex-wrap: wrap;
+}
+
+#applyCouponButton {
+    margin-left: 10px;
+    background-color: #f1bc99;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+    #applyCouponButton:hover, #back:hover, #next:hover {
+        background-color: #d49f7b;
+    }
+
+/* lu新增 */
+@media screen and (max-width: 768px) {
+    .orderInfoPage {
+        overflow-x: scroll;
+        padding: 5% 0 3%;
+    }
+
+    table {
+        width: 100%;
+        padding-left: 2%;
+    }
+}

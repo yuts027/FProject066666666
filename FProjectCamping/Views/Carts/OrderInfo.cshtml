@@ -1,0 +1,165 @@
+﻿@model FProjectCamping.Models.ViewModels.Carts.CartVm
+
+@{
+    ViewBag.Title = "訂單資料";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/Progress.css">
+    <link rel="stylesheet" href="~/css/OrderInfo.css">
+}
+@using (Html.BeginForm("OrderInfo", "Carts", FormMethod.Post, new { onsubmit = "return checkPaymentType();" }))
+{
+    <div class="conatiner">
+        <div class="main">
+            <div class="container mt-5 mb-5">
+                <div class="orderInfoarea">
+
+                    <div class="orderInfoPage">
+
+                        <!--進度條 begin-->
+                        <ul class="progressarea">
+                            <li class="active">購物車</li>
+                            <li class="active">訂單資料
+                            <li>建立訂單</li>
+                            <li>付款</li>
+                        </ul>
+                        <!--進度條 end-->
+                        <!-- 表格部分 -->
+                        <table class="tabledetail">
+                            <thead>
+                                <tr>
+                                    <th>營區房型</th>
+                                    <th>房號</th>
+                                    <th>入住日</th>
+                                    <th>退房日</th>
+                                    <th>單價</th>
+                                    <th>夜數</th>
+                                    <th>加床</th>
+                                    <th>加床金額</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                @for (var i = 0; i < Model.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomName)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomNum)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckInDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckOutDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomPrice)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].Days)</td>
+                                        <td>
+                                            @Html.CheckBoxFor(model => model.Items[i].ExtraBed, new { disabled = "disabled" })
+                                        </td>
+                                        <td data-extraPrice>@(Model.Items[i].ExtraBed ? Model.Items[i].ExtraBedPrice.ToString() : "0")</td>
+                                        <td data-subtotal>@Html.DisplayFor(model => model.Items[i].SubTotal)</td>
+                                        @*統一將欄位傳回後端更新*@
+                                        @Html.HiddenFor(model => model.Items[i].Id)
+                                        @Html.HiddenFor(model => model.Items[i].RoomName)
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @Html.HiddenFor(model => model.Id)
+
+                        <!--優惠碼專區 begin-->
+                        <div class="calPrice">
+                            @*<div class="coupon">
+                                    <label for="coupon">優惠碼：</label>
+                                    <input type="text" id="coupon" name="coupon">
+                                    @Html.HiddenFor(model => model.Coupon)
+                                    <button type="button" id="applyCouponButton">使用</button>
+                                </div>*@
+                            <div class="total">
+                                @*<span>小計：</span><span id="total">@Model.TotalPrice</span>
+                                    <br>*@
+                                @*<span>折扣：</span><span id="discount"></span>*@
+                                <br>
+                                <span>總金額：</span><span id="total" name="TotalPrice">@Model.TotalPrice</span>
+                                @Html.HiddenFor(model => model.TotalPrice)
+                            </div>
+                        </div>
+                        <!--優惠碼專區 end-->
+
+                        <div class="bottomArea">
+                            <button type="button" id="back">上一頁</button>
+                            <button type="submit" id="next">下一步</button>
+                        </div>
+                        <div class="buyerInfo">
+
+                            <div class="buyerInfo-data">
+
+                                <label for="buyerInfo-title">訂房人資料</label><br><br>
+
+                                <label for="name"><span>*</span>姓名：</label>
+                                <input type="text" id="name" name="name" required value="@Model.ContactProfile.Name"><br><br>
+                                @Html.HiddenFor(model => model.ContactProfile.Name)
+
+                                <label for="phone"><span>*</span>電話號碼：</label>
+                                <input type="tel" id="phone" name="phone" required value="@Model.ContactProfile.PhoneNum"><br><br>
+                                @Html.HiddenFor(model => model.ContactProfile.PhoneNum)
+
+                                <label for="email"><span>*</span>電子郵件：</label>
+                                <input type="email" id="email" name="email" required value="@Model.ContactProfile.Email"><br><br>
+                                @Html.HiddenFor(model => model.ContactProfile.Email)
+
+                                <label for="PaymentType"><span>*</span>付款方式：</label>
+                                <select id="PaymentType" name="PaymentType">
+                                    <!-- 預設選項 -->
+                                    <option value="" disabled selected>請選擇付款方式</option>
+                                    <!-- 預先設定的付款方式選項 -->
+                                    <option value=1>現金</option>
+                                    <option value=3>PayPal</option>
+                                    <option value=4>銀行轉帳</option>
+                                </select>
+                                @Html.HiddenFor(model => model.PaymentType)
+                            </div>
+
+                            <div class="buyerInfo-memo">
+                                <label for="memo">備註：</label>
+                                <textarea name="memo" rows="4" cols="50" placeholder="如您有特殊需求，可以在此欄位註明。"></textarea>
+                                @Html.HiddenFor(model => model.Memo)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section scripts{
+    <script>
+        $('#name').on('input', function () {
+            $('input[name="ContactProfile.Name"]').val($(this).val());
+        });
+
+        $('#phone').on('input', function () {
+            $('input[name="ContactProfile.PhoneNum"]').val($(this).val());
+        });
+
+        $('#email').on('input', function () {
+            $('input[name="ContactProfile.Email"]').val($(this).val());
+        });
+        $('#memo').on('input', function () {
+            $('input[name="Memo"]').val($(this).val());
+        });
+
+        // 0925 rabbit
+        document.getElementById('back')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("Cart", "Carts")';
+            });
+
+        function checkPaymentType() {
+            var paymentType = document.getElementById("PaymentType").value;
+            if (paymentType === "") {
+                alert("請選擇付款方式！");
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

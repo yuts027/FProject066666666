@@ -1,0 +1,60 @@
+﻿@using FProjectCamping.Models.ViewModels.Rooms;
+@{
+    ViewBag.Title = "房型";
+    var hotrooms = ViewBag.hotrooms as List<RoomtypeVM>;
+}
+
+
+<main>
+
+
+    <div class="main">
+
+
+        <div class="mainarearoom" id="roomContainer">
+
+            <div id="contentToShowByDefault">
+                <div id="doubleRoomInfo">
+                    <div class="row-room roomnumber" data-roomid="@Model.RoomtypeId">
+                        <div class="row">
+
+
+                            <div class="col-lg-5">
+                                <img src="~/Images/@Model.Photo" alt="" class="img-fluid rounded" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>@Model.RoomName@Model.RoomTypeName</h2>
+                                <div class="separator3"></div>
+                                <input type="hidden" name="id" value="@Model.RoomId" />
+                                <ul>
+                                    <li>
+                                        平日價格：@Model.WeekdayPrice
+                                    </li>
+                                    <li>
+                                        假日價格：@Model.WeekendPrice
+                                    </li>
+                                </ul>
+                                <div class="button-and-quantity-container">
+                                    <button type="button" id="btnOrder588" class="btn btn-primary btnOrder588" data-roomid="@Model.RoomId">加入訂單</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+@*@section css{
+    <link rel="stylesheet" href="~/css/RoomType.css">
+}*@
+
+
+

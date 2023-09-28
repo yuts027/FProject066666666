@@ -1,0 +1,181 @@
+﻿@model FProjectCamping.Models.ViewModels.Members.RegisterVm
+
+
+@{
+    ViewBag.Title = "會員註冊";
+    DateTime initialDate = DateTime.Now.AddYears(-18);
+
+
+}
+@section css {
+    <link rel="stylesheet" href="~/css/main_register.css">
+}
+
+
+<div class="container">
+    <div class="memberarea">
+        <div class="row memberinner align-items-center">
+            <div class="col-lg-6 col-md-12 p-2">
+                <div class="memberleft-img p-3"><img src="~/images/camping_bn.jpg" alt="" class="img-fluid"></div>
+
+            </div>
+            <div class="col-lg-6 col-md-12 p-3">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal row justify-content-center memberightarea">
+                        <div class="registertitle">
+                            <h3 class="m-0 text-start ps-3 pb-3 border-bottom"><i class="bi bi-person-fill"></i>註冊會員</h3>
+                        </div>
+                        @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+                        {
+                            <div class="alert alert-danger mt-2">
+
+                                @foreach (var error in ViewBag.Errors)
+                                {
+                                    @error
+                                }
+
+                            </div>
+                        }
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-lg-6 col-md-12 mt-3">
+                            @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "form-label  col-md-2" })
+
+                            @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-lg-6 col-md-12 mt-3">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label  col-md-2" })
+
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 mt-3">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-label  col-md-2" })
+                            <div class="pwdarea">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="input-group-append togglePassword">
+                                    <i class="bi bi-eye-slash-fill" onclick="togglePasswordVisibility(this)"></i>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            <div id="passwordHelpBlock" class="form-text">
+                                必須包含1個特殊符號且不得少於8碼
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 mt-3">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-label  col-md-4" })
+                            <div class="pwdarea">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="input-group-append togglePassword">
+                                    <i class="bi bi-eye-slash-fill" onclick="togglePasswordVisibility(this)"></i>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+
+                        <div class="col-12 mt-2">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label  col-md-2" })
+
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 mt-2 mb-3">
+                            @Html.LabelFor(model => model.PhoneNum, htmlAttributes: new { @class = "form-label  col-md-2" })
+
+                            @Html.EditorFor(model => model.PhoneNum, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNum, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-12 mt-2 mb-3">
+                            @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "form-label  col-md-2" })
+                            @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", max = initialDate.ToString("yyyy-MM-dd") } })
+                            @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="mt-2">
+                            <div class="text-end">
+                                <input type="submit" value="註冊" class="btn btn-dark" />
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <div class="text-end">
+                                <button type="button" id="setButton" onclick="setDefaultAccount()" class="btn btn-primary">Demo對</button>
+                                <button type="button" id="setButton2" onclick="setDefaultAccount2()" class="btn btn-primary">Demo錯</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        //預設
+        function setDefaultAccount() {
+            var accountInput = document.getElementById("Account");
+            accountInput.value = "aliee";
+            var nameInput = document.getElementById("Name");
+            nameInput.value = "AlieeLee";
+            var passwordInput = document.getElementById("Password");
+            passwordInput.value = "12345@12345";
+            var compasswordInput = document.getElementById("ConfirmPassword");
+            compasswordInput.value = "12345@12345";
+            var emailInput = document.getElementById("Email");
+            emailInput.value = "aliee@gmail.com";
+            var phoneInput = document.getElementById("PhoneNum");
+            phoneInput.value = "0981312312";
+            var phoneInput = document.getElementById("Birthday");
+            phoneInput.value = "1990-12-12";
+        }
+
+        function setDefaultAccount2() {
+            var accountInput = document.getElementById("Account");
+            accountInput.value = "aliee李";
+            var nameInput = document.getElementById("Name");
+            nameInput.value = "AlieeLee";
+            var passwordInput = document.getElementById("Password");
+            passwordInput.value = "12345";
+            var compasswordInput = document.getElementById("ConfirmPassword");
+            compasswordInput.value = "12345";
+            var emailInput = document.getElementById("Email");
+            emailInput.value = "aliee@gmail.com";
+            var phoneInput = document.getElementById("PhoneNum");
+            phoneInput.value = "0981312312";
+            var phoneInput = document.getElementById("Birthday");
+            phoneInput.value = "1990-12-12";
+        }
+    </script>
+    <script src="~/js/main_password.js"></script>
+}

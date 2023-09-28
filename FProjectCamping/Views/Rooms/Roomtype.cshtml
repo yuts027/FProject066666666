@@ -1,0 +1,427 @@
+﻿@using FProjectCamping.Models.ViewModels.Rooms
+@{
+    ViewBag.Title = "房型";
+    var hotrooms = ViewBag.hotrooms as List<RoomtypeVM>;
+}
+
+
+<main>
+    <div class="main">
+        <div class="container-fuild ">
+            <img src="~/Images/photo1.jpg" class="img-fluid" alt="">
+
+        </div>
+
+        <div class="mainarearoom">
+            <div id="containerWithBorder" class="container">
+                <div class="qbookboxpmar">
+                    <div class="inline-elements">
+                        <span class="captionqbookopen">快 速 訂 房</span>
+                        <label for="selectBox ">房型：</label>
+
+                        <div class="qbook1">
+                            <select class="form-select" id="RoomtypeDropdown" aria-label="Default select example">
+                                <option selected value="0">請選擇房型</option>
+                            </select>
+                        </div>
+
+
+                        <label for="ar_date" class="form-label">入住日:</label><input type="date" class="form-control" id="ar_date">
+                        <label for="de_date" class="form-label">退房日:</label><input type="date" class="form-control" id="de_date">
+                        <button type="button" id="booking" class="btn btn-dark " style="margin-left: 10px;"><i class="fa fa-search"></i>搜尋</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            @foreach (var room in hotrooms)
+            {
+
+                @Html.Partial("RoomsPartial", room);
+
+            }
+
+
+
+            <hr />
+            <div class="text-end">
+                <button type="button" class="btn btn-danger">下一步</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+@section scripts
+{
+    <script>
+        const roomtypeDropdown = document.getElementById('RoomtypeDropdown');
+
+
+        window.addEventListener('load', function () {
+            fetch('/api/RoomsApi/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    roomtypeDropdown.innerHTML = '';
+
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '0';
+                    defaultOption.text = '請選擇房型';
+                    roomtypeDropdown.append(defaultOption);
+
+                    for (let i = 0; i < data.length; i++) {
+                        const option = document.createElement('option');
+                        option.value = data[i].value;
+                        option.text = data[i].name;
+                        roomtypeDropdown.append(option);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedRoomTypeId = urlParams.get('selectedRoomTypeId');
+
+            // 获取下拉列表元素
+            const roomtypeDropdown = document.getElementById('RoomtypeDropdown');
+
+            if (selectedRoomTypeId !== null) {
+                // 设置选中项
+                roomtypeDropdown.value = selectedRoomTypeId;
+                console.log(selectedRoomTypeId)
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // 獲取按鈕元素
+            const booking = $("#booking");
+
+            // 添加按鈕點擊事件監聽器
+            booking.click(function () {
+                // 發送AJAX請求已獲取已在ORDERITEM中的roomid列表
+                $.ajax({
+                    url: '/api/CartApi/GetOrderedRoomIds', // 替換為實際的API路由
+                    type: 'GET',
+                    success: function (orderedRoomIds) {
+                        console.log('已订购的房间 ID 列表:', orderedRoomIds);
+
+                        // 在這裡處理已訂購的房間ID數據
+                        // 根據返回的ROOMID列表過濾顯示的房型
+                        $(".btnOrder").each(function () {
+                            const roomId = $(this).data("roomid");
+                            if (orderedRoomIds.includes(roomId)) {
+                                $(this).hide(); // 隱藏已訂購的房型的按钮
+                            }
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error('发生错误:', errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    @*<script>
+
+        let shouldRedirect = true; // 初始化为需要执行重定向
+
+        roomtypeDropdown.addEventListener('change', function () {
+        const selectedRoomTypeId = roomtypeDropdown.value;
+
+        if (selectedRoomTypeId !== '0') {
+        // 构建新的 URL，将选中的房型ID添加为查询参数
+        const newUrl = `@Url.Action("Roomtype", "Rooms", new { area = "" })?selectedRoomTypeId=${selectedRoomTypeId}`;
+
+        // 使用 AJAX 请求加载新页面的内容
+        fetch(newUrl)
+        .then(response => response.text())
+        .then(data => {
+        // 将加载的内容显示在页面中的某个元素中
+        const contentElement = document.getElementById('content');
+        if (contentElement) {
+        contentElement.innerHTML = data;
+        }
+
+        // 如果需要执行页面重定向，则执行重定向
+        if (shouldRedirect) {
+        window.location.href = newUrl;
+        }
+        })
+        .catch(error => {
+        console.error(error);
+        });
+        } else {
+        shouldRedirect = false; // 如果选择的是默认值，禁止执行重定向
+        }
+        });
+            </script>*@
+
+
+    <script>
+    //20230928
+roomtypeDropdown.addEventListener('change', function () {
+    const selectedRoomTypeId = roomtypeDropdown.value;
+
+    if (selectedRoomTypeId !== '0') {
+
+        const newUrl = `@Url.Action("Roomtype", "Rooms", new { area = "" })?selectedRoomTypeId=${selectedRoomTypeId}`;
+
+
+        history.pushState(null, '', newUrl);
+
+        // 使用 AJAX 請求加載新頁面
+        fetch(newUrl)
+        .then(response => response.text())
+        .then(data => {
+
+            const contentElement = document.getElementById('content');
+            if (contentElement) {
+                contentElement.innerHTML = data;
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+});
+
+
+
+    </script>
+
+
+
+
+
+    <script>
+        let checkInDate;
+        let checkOutDate;
+        let daysDifference;
+
+        const arDateInput = document.getElementById('ar_date');
+        const deDateInput = document.getElementById('de_date');
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var 今天 = new Date();
+            今天.setDate(今天.getDate() + 1);
+            arDateInput.min = 今天.toISOString().split("T")[0];
+
+            arDateInput.addEventListener("change", function () {
+                var selectedDate = new Date(arDateInput.value);
+                checkInDate = selectedDate;
+
+                // 设置退房日期的最小值为入住日期的隔天
+                var nextDay = new Date(selectedDate);
+                nextDay.setDate(selectedDate.getDate() + 1);
+                deDateInput.min = nextDay.toISOString().split("T")[0];
+
+                // 检查退房日期是否早于入住日期
+                if (new Date(deDateInput.value) < selectedDate) {
+                    deDateInput.value = arDateInput.value; // 将退房日期设置为入住日期
+                }
+
+                var maxDate = new Date(selectedDate);
+                maxDate.setDate(selectedDate.getDate() + 14);
+                deDateInput.max = maxDate.toISOString().split("T")[0];
+            });
+        });
+        $(document).ready(function () {
+            // 獲取按鈕元素
+            const btnOrder = $(".btnOrder");
+
+            // 初始化為全局變量
+            let selectedRoomType;
+            let checkInDateValue;
+            let checkOutDateValue;
+
+            // 初始時禁用按鈕
+            btnOrder.prop('disabled', true);
+
+            // 監聽 RoomtypeDropdown、ar_date 和 de_date 字段的變化
+            $("#RoomtypeDropdown, #ar_date, #de_date, #booking").on("change", function () {
+                selectedRoomType = $("#RoomtypeDropdown").val();
+                checkInDateValue = arDateInput.value;
+                checkOutDateValue = deDateInput.value;
+
+                // 如果所有字段都已選擇，啟用按鈕，否則禁用按钮
+                if (selectedRoomType && checkInDateValue && checkOutDateValue && $("#booking").is(":checked")) {
+                    btnOrder.prop('disabled', false);
+                } else {
+                    btnOrder.prop('disabled', true);
+                }
+            });
+
+            // 添加按鈕點擊事件監聽器
+            btnOrder.click(function () {
+                // 檢查是否所有字段都已選擇
+                if (selectedRoomType && checkInDateValue && checkOutDateValue) {
+                    const extraBed = false;
+                    const roomId = $(this).data("roomid");
+
+
+
+
+                    // 計算天數
+                    const timeDifference = new Date(checkOutDateValue) - new Date(checkInDateValue);
+                    daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+                    let SubTotal = 0;
+                    let currentDate = new Date(checkInDateValue);
+                    const hasExtraBed = true; /* 根据你的逻辑判断是否有加床 */
+
+                    while (currentDate < new Date(checkOutDateValue)) {
+                        const dayOfWeek = currentDate.getDay(); // 获取当前日期的星期几（0-6，0代表星期天，6代表星期六）
+                        let dailyPrice = 0;
+
+                        if (dayOfWeek === 6 || dayOfWeek === 5) {
+                            // 如果是星期五或星期六，使用價格2800
+                            dailyPrice = 2800;
+                        } else {
+                            // 否则使用默认价格2000
+                            dailyPrice = 2000;
+                        }
+
+                        // 如果有加床，在当前价格的基础上增加500
+                        //if (hasExtraBed) {
+                        //    dailyPrice += 500;
+                        //}
+
+                        SubTotal += dailyPrice;
+
+                        // 增加一天
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+
+                    const requestData = {
+                        RoomId: roomId,
+                        CheckInDate: checkInDateValue,
+                        CheckOutDate: checkOutDateValue,
+                        ExtraBed: extraBed,
+                        Days: daysDifference,
+                        SubTotal: SubTotal,
+                    };
+
+
+
+                    $.ajax({
+                        url: '/api/Cart/AddCartItem',
+                        type: 'POST',
+                        contentType: 'application/json', // 设置 Content-Type 为 JSON
+                        data: JSON.stringify(requestData), // 将请求数据转换为 JSON 字符串
+                        success: function (data) {
+                            console.log('成功響應:', data);
+                            updateCartItemCount(data.count);
+                            alert('已加入購物車');
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error('發生錯誤:', errorThrown);
+                        }
+                    });
+                } else {
+                    // 如果有任何一个字段未选择,禁用按钮或显示错误消息
+                    alert('請填選日期');
+                    // 或者禁用按钮的方式如下：
+                    // btnOrder.prop('disabled', true);
+                }
+            });
+
+            // 在执行搜索后启用"加入订单"
+            $("#booking").click(function () {
+                // 执行搜索的逻辑
+
+
+                // 启用 "加入订单" 按钮
+                btnOrder.prop('disabled', false);
+            });
+        });
+
+        function updateCartItemCount(count) {
+            var cartItemCountElement = document.getElementById('cartItemCount');
+            if (cartItemCountElement) {
+                console.log(count);
+                cartItemCountElement.textContent = count;
+
+            }
+        }
+
+    </script>
+
+
+    <script>
+        var roomTypeDropdown = document.getElementById('RoomtypeDropdown');
+
+        roomTypeDropdown.addEventListener("change", function () {
+            var selectedValue = roomTypeDropdown.value;
+
+            // 獲取帶有所有 data-roomid 屬性的房間
+            var rooms = $(".roomnumber");
+
+            if (selectedValue === '0') {
+                // 如果 selectedValue 為0，顯示所有房间
+                rooms.show();
+            } else {
+                // 否則，根據 selectedValue 顯示或隱藏房间
+                rooms.each(function () {
+                    let self = $(this)
+                    if (selectedValue == self.attr("data-roomid")) {
+                        self.show();
+                    } else {
+                        self.hide();
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // 獲取按鈕元素
+            const booking = $("#booking");
+
+            // 添加按鈕點擊事件監聽器
+            booking.click(function () {
+                // 發送AJAX請求已獲取已在ORDERITEM中的roomid列表
+                $.ajax({
+                    url: '/api/RoomsApi/GetOrderedRoomIds', // 替換為實際的API路由
+                    type: 'GET',
+                    success: function (orderedRoomIds) {
+                        console.log('已订购的房间 ID 列表:', orderedRoomIds);
+
+                        // 在這裡處理已訂購的房間ID數據
+                        // 根據返回的ROOMID列表過濾顯示的房型
+                        console.log('orderedRoomIds:', orderedRoomIds);
+                        $(".btnOrder").each(function () {
+                            const roomId = $(this).data("roomid");
+                            console.log('roomId:', roomId);
+                            if (orderedRoomIds.includes(roomId)) {
+                                $(this).hide(); // 隱藏已訂購的房型的按钮
+                            } console.log('按钮已隐藏');
+                       
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error('发生错误:', errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/RoomType.css">
+}

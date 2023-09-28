@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "後臺首頁";
+    var newOrders = ViewBag.NewOrders as IEnumerable<FProjectCampingBackend.Models.ViewModels.OrderMemberNewVm>;
+}
+
+@model IEnumerable<FProjectCampingBackend.Models.EFModels.Member>
+
+
+<div class="mainarea">
+    <div class="imgarea">
+        <img src="~/images/photo1.jpg" alt="photo" class="img-fluid"/>
+    </div>
+    <div class="listarea area1">
+        <h2><i class="bi bi-people-fill"></i> 最新會員</h2>
+
+
+        @{
+            Html.RenderPartial("_mod_lastestMember");
+        }
+        <div class="text-end"><a href="/Members/">more...</a></div>
+    </div>
+    <div class="listarea area2">
+        <h2><i class="bi bi-layout-text-window-reverse"></i> 最新訂單</h2>
+        @{
+            Html.RenderPartial("_mod_newOrder", newOrders);
+
+        }
+        <div class="text-end"><a href="/Orders/">more...</a></div>
+    </div>
+
+
+</div>
+
+@section css{
+    <style>
+        body {
+            background: url("/images/home_bg.png");
+            background-size:contain;
+        }
+        .imgarea{
+            padding-bottom:3%;
+        }
+        .mainarea {
+            display: flex;
+            flex-wrap: wrap;
+            background: #FFF;
+            align-items: flex-start;
+            justify-content: center;
+            
+        }
+
+        .listarea {
+            width: 48%;
+            padding: 1%;
+            margin: 0 1%;
+            border-radius: 20px;
+            border: 1px solid;
+        }
+
+        .memberPhoto {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        .memberPhoto img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+
+
+}

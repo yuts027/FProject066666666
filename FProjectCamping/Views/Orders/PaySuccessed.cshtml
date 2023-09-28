@@ -1,0 +1,89 @@
+﻿@model FProjectCamping.Models.ViewModels.Orders.PayOrderVm
+
+@{
+    ViewBag.Title = "PaySuccessed";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/Progress.css">
+    <link rel="stylesheet" href="~/css/Pay.css">
+}
+<div class="main">
+    <div class="container mt-5 mb-5">
+        <div class="payarea">
+
+            <div class="payPage">
+
+                <!--進度條 begin-->
+                <ul class="progressarea">
+                    <li class="active">購物車</li>
+                    <li class="active">訂單資料</li>
+                    <li class="active">建立訂單</li>
+                    <li class="active">付款</li>
+                </ul>
+                <!--進度條 end-->
+                <div class="col-lg-12 mx-auto ps-4 pe-4 row align-content-space-between">
+
+                    <div class="text-start">
+
+                        <div class="form-horizontal row ">
+                            <div class="righttitle">
+                                <h3 class="border-bottom pb-3">已完成付款~期待您的到來</h3>
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.OrderNumber, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.OrderNumber)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.TotalPrice)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.PaymentType)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Status)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label col-md-3" })
+                                @Html.DisplayFor(model => model.Email)
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.PhoneNum, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.PhoneNum)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottomArea">
+                        <button type="button" id="GoHome">回首頁</button>
+                        <button type="button" id="MyOrder">我的訂單</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        document.getElementById('MyOrder')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("MyOrders", "Members")';
+            });
+
+        document.getElementById('GoHome')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("Index", "Home")';
+        });
+    </script>
+}

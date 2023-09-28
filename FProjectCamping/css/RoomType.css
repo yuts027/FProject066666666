@@ -1,0 +1,100 @@
+
+body {
+    background-image: url(../images/home_bg.png);
+    background-size: contain;
+    background-position: top;
+}
+
+.row-room {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 3% 0 3%;
+    border-radius: 15px;
+    background: #fff1e4;
+}
+
+#containerWithBorder {
+    background-color: #6cb22c;
+    border: 2px solid #6cb22c;
+    display: flex;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+#searchButton {
+    background-color: burlywood;
+    color: #6cb22c;
+}
+
+    #searchButton:hover {
+        background-color: #fff;
+        color: #6cb22c;
+    }
+
+.separator3 {
+    border-bottom: 3px solid green;
+    margin-bottom: 10px;
+}
+
+.button-and-quantity-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.spacer {
+    flex-grow: 0.01; /* 让间距元素填充剩余空间 */
+    margin: 0 10px; /* 设置左右间距 */
+}
+
+.quantity-selector {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    padding: 5px; /* 保持水平布局 */
+}
+
+#contentToShowByDefault {
+    margin-top: 30px;
+}
+
+.container-fluid img {
+    margin-top: -80px;
+    width: 100%;
+    max-height: 550px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.captionqbookopen {
+    color: #fff;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.mainarearoom {
+    max-width: 1000px;
+    margin: 2% auto;
+}
+
+.qbookboxpmar {
+    width: 100%;
+}
+
+    .qbookboxpmar .inline-elements {
+        display: flex;
+        justify-content: space-around;
+        align-items: baseline;
+    }
+
+.form-control {
+    width: 20%;
+}
+
+.btnnext {
+    padding-right: 15px;
+}
+
+

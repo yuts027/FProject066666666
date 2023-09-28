@@ -1,0 +1,41 @@
+﻿
+
+@model IEnumerable<FProjectCampingBackend.Models.EFModels.Member>
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>帳號</th>
+            <th>時間</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model)
+        {
+            <tr>
+                <td>@member.Id</td>
+                <td>
+                    @if (member.Photo == null)
+                    {
+                        <div class="memberPhoto">
+                            <img src="/images/camping_no.jpg" alt="大頭照" class="img-fluid memberPhoto">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="memberPhoto">
+                            <img src="/files/@Html.DisplayFor(modelItem => member.Photo)" alt="@member.Account" class="img-fluid" />
+                        </div>
+
+
+                    }
+
+                    @member.Account
+                </td>
+
+                <td>@member.CreatedTime</td>
+            </tr>
+        }
+    </tbody>
+</table>

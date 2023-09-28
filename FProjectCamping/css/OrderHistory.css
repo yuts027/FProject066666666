@@ -1,0 +1,33 @@
+
+.orderHistory {
+    width: 100%;
+    height: auto; /* 100%视口高度，使其铺满整个视口 */
+    display: flex;
+    flex-direction: column; /* 垂直方向排列子元素 */
+    align-items: center;
+    justify-content: center;
+   /* position: absolute; *//* 使用position: absolute;將cartPage從正常文檔流中移除 */
+    top: 12%; /* 設置cartPage的位置 */
+    left: 0;
+}
+
+/* 更改分頁連結文字顏色 */
+.pagination a.page-link {
+    color: rgb(207, 123, 90);
+}
+
+/* 更改分頁按鈕的背景顏色 */
+.pagination li.page-item.active .page-link {
+    background-color: rgb(109, 74, 204);
+    border-color: red;
+}
+
+/* 更改分頁按鈕文字顏色 */
+.pagination li.page-item.active .page-link {
+    color: white; /* 更改為白色文字，以在紅色背景上顯示 */
+}
+
+/* 更改前後頁按鈕的顏色 */
+.pagination li.page-item span {
+    color: rgb(128, 60, 5);
+}

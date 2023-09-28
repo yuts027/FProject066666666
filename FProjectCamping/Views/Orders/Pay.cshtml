@@ -1,0 +1,170 @@
+﻿@model FProjectCamping.Models.ViewModels.Orders.PayOrderVm
+@{
+    ViewBag.Title = "Pay";
+}
+@section css{
+    <link rel="stylesheet" href="~/css/Progress.css">
+    <link rel="stylesheet" href="~/css/Pay.css">
+}
+<div class="main">
+    <div class="container mt-5 mb-5">
+        <div class="payarea">
+
+            <div class="payPage">
+
+                <!--進度條 begin-->
+                <ul class="progressarea">
+                    <li class="active">購物車</li>
+                    <li class="active">訂單資料</li>
+                    <li class="active">建立訂單</li>
+                    <li>付款</li>
+                </ul>
+                <!--進度條 end-->
+                <div class="col-lg-12 mx-auto ps-4 pe-4 row align-content-space-between">
+
+                    <div class="text-start">
+
+                        <div class="form-horizontal row ">
+                            <div class="righttitle">
+                                <h3 class="border-bottom pb-3">訂單建立完成</h3>
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.OrderNumber, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.OrderNumber)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.TotalPrice)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.PaymentType)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Status)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label col-md-3" })
+                                @Html.DisplayFor(model => model.Email)
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.PhoneNum, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.PhoneNum)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottomArea">
+                        <button type="button" id="MyOrder">我的訂單</button>
+
+                        <!-- 尚未付款 & 付款失敗 才顯示按鈕 -->
+                        @if (Model.StatusEnum == 1 || Model.StatusEnum == 3)
+                        {
+                            <!-- Paypal Smart Payment Button -->
+                            <div id="paypal-button-container"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AR5g1C8v0pgh-q6LV-bz7cZcn1BqOnFphL3nSo9ayTk4yXyhCps54698SBweAz0gKXH8B020ICRBzM35"></script>
+    <script>
+        paypal.Buttons({
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: '@Model.TotalPrice',
+                    currency_code: 'USD', // 幣別
+                }
+            }]
+        });
+    },
+    onApprove: function (data) {
+        console.log('onApprove', data);
+        fetch('/Orders/CallBack', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                orderNumber: '@Model.OrderNumber',
+                orderId: '@Model.Id',
+                IsSuccessed: true,
+            })
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '付款成功',
+            confirmButtonText: '完成',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Orders/PaySuccessed?orderId=@Model.Id';
+            }
+        });
+
+    },
+    onError: function (err) {
+        console.log('onError', err);
+        fetch('/Orders/CallBack', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                orderNumber: '@Model.OrderNumber',
+                orderId: '@Model.Id',
+                IsSuccessed: false,
+            })
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '付款失敗'
+        })
+    },
+    onCancel: function () {
+        // 取消
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: '取消付款',
+            text: '請盡速完成付款~',
+        })
+    }
+}).render('#paypal-button-container');
+    </script>
+    <script>
+           // 0925 rabbit
+        document.getElementById('MyOrder')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("MyOrders", "Members")';
+        });
+    </script>
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '訂單建立成功',
+            text: '感謝您訂購，請繼續完成付款',
+        })
+    </script>
+}

@@ -1,0 +1,77 @@
+/* lu修改 */
+.cartPage {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    padding: 2% 1%;
+}
+
+.cartarea {
+    padding: 3% 0;
+    background: #ffe2ce;
+    box-shadow: 1px 1px 10px #b7b7b7;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+.extra-checkbox {
+    /* 添加您的自訂樣式，例如背景顏色、邊框、大小等 */
+    width: 15px;
+    height: 20px;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.totalArea {
+    border-bottom: 2px solid #884d25; /* 添加2像素粗的黑色底線，您可以根據需要調整顏色和粗細 */
+    padding-bottom: 10px; /* 可選：添加一些底部內邊距以增加間距 */
+    margin: 2% 0;
+    text-align: right;
+}
+
+label[for="total"] {
+    position: relative;
+    right: 1%;
+}
+
+#back, #next {
+    margin-left: 10px;
+    background-color: #f1bc99;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#applyCouponButton {
+    margin-left: 10px;
+    background-color: #f1bc99;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+    #applyCouponButton:hover, #back:hover, #next:hover {
+        background-color: #d49f7b;
+    }
+
+
+@media screen and (max-width: 768px) {
+    .cartPage {
+        overflow-x: scroll;
+        padding: 5% 0 3%;
+    }
+
+    table {
+        width: 100%;
+        padding-left: 2%;
+    }
+}

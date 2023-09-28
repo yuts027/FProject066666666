@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FProjectCamping", "FProjectCamping\FProjectCamping.csproj", "{95F8C496-EDFA-4594-A552-1646706DE5A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{860DF72C-54EA-4CC3-9CFD-EC748D651686}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FProjectCampingBackend", "FProjectCampingBackend\FProjectCampingBackend.csproj", "{2B6C9F20-82C6-4AB5-8BDF-267FE1185C12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95F8C496-EDFA-4594-A552-1646706DE5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F8C496-EDFA-4594-A552-1646706DE5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F8C496-EDFA-4594-A552-1646706DE5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F8C496-EDFA-4594-A552-1646706DE5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6C9F20-82C6-4AB5-8BDF-267FE1185C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6C9F20-82C6-4AB5-8BDF-267FE1185C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6C9F20-82C6-4AB5-8BDF-267FE1185C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6C9F20-82C6-4AB5-8BDF-267FE1185C12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BAD6A69-14EE-489D-85B4-725D3E73F871}
+	EndGlobalSection
+EndGlobal

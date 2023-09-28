@@ -1,0 +1,121 @@
+﻿@model FProjectCamping.Models.ViewModels.Members.LoginVm
+
+@{
+    ViewBag.Title = "會員登入";
+
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/main_register.css">
+
+}
+
+
+<div class="container">
+    <div class="memberarea">
+        <div class="row memberinner align-items-center justify-content-center">
+            <div class="col-lg-6 col-md-12 p-2">
+                <div class="memberleft-img p-3"><img src="~/images/camping_bn.jpg" alt="" class="img-fluid"></div>
+
+            </div>
+            <div class="col-lg-6 col-md-12 p-3">
+
+                <div class="row justify-content-center memberightarea login">
+                    <div class="registertitle">
+                        <h3 class="m-0 text-start ps-3 pb-3 border-bottom"><i class="bi bi-person-fill"></i>會員登入</h3>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+
+
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger alert-danger" })
+                            <div class="col-12 mt-3">
+                                @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+
+                                <div class="pwdarea">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div class="input-group-append togglePassword">
+                                        <i class="bi bi-eye-slash-fill" onclick="togglePasswordVisibility(this)"></i>
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="col-12 mt-3">
+
+
+                                @Html.EditorFor(model => model.RememberMe)
+                                @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label" })
+                                @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="mt-3">
+
+                                <input type="submit" value="登入" class="btn btn-dark col-12 mt-4" />
+
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-12 mt-4 text-end">
+                        <label type="text"><a href="@Url.Action("ForgotPassword", "Members", new { area = "" })">忘記密碼</a> | 還不是會員?<a href="@Url.Action("Register", "Members", new { area = "" })">加入會員</a></label>
+                    </div>
+                    <div class="mt-2">
+                        <div class="text-end">
+                            <button type="button" id="setButton" onclick="setDefaultAccount()" class="btn btn-primary">Demo tim</button>
+                            <button type="button" id="setButton2" onclick="setDefaultAccount2()" class="btn btn-primary">Demo allen</button>
+                            <button type="button" id="setButton3" onclick="setDefaultAccount3()" class="btn btn-primary">Demo Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        //預設
+        function setDefaultAccount() {
+            var accountInput = document.getElementById("Account");
+            accountInput.value = "tim";
+            var passwordInput = document.getElementById("Password");
+            passwordInput.value = "12345@12345";
+
+        }
+
+        function setDefaultAccount2() {
+            var accountInput = document.getElementById("Account");
+            accountInput.value = "allen";
+            var passwordInput = document.getElementById("Password");
+            passwordInput.value = "12345678@@";
+        }
+
+        function setDefaultAccount3() {
+            var passwordInput = document.getElementById("Password");
+            passwordInput.value = "12345@12345";
+        }
+    </script>
+
+    <script src="~/js/main_password.js"></script>
+}

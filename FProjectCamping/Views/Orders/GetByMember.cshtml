@@ -1,0 +1,74 @@
+﻿@model IEnumerable<FProjectCamping.Models.ViewModels.Orders.GetByMemberVm>
+@{
+    ViewBag.Title = "訂單一覽";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/Progress.css">
+    <link rel="stylesheet" href="~/css/OrderHistory.css" />
+}
+
+<div class="conatiner">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-12 col-sm-12">
+            <div class="orderHistoryPage">
+                <br>
+                <div>訂單查詢</div>
+
+                <!-- 表格部分 -->
+                <table class="table table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">訂單編號</th>
+                            <th scope="col">訂單日期</th>
+                            <th scope="col">付款方式</th>
+                            <th scope="col">金額</th>
+                            <th scope="col">狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr data-bs-toggle="collapse" data-bs-target="#order_@order.DisplayNumber" aria-expanded="false">
+                                <td>@order.OrderNumber</td>
+                                <td>@order.OrderTime</td>
+                                <td>@order.PaymentType</td>
+                                <td>@order.Price</td>
+                                <td>@order.Status</td>
+                            </tr>
+                            <tr id="order_@order.DisplayNumber" class="collapse">
+                                <td colspan="5">
+                                    <!-- 訂單詳細 -->
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th>房型</th>
+                                                <th>入住日</th>
+                                                <th>退房日</th>
+                                                <th>天數</th>
+                                                <th>小計</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in order.OrderItems)
+                                            {
+                                                <tr>
+                                                    <td>@item.RoomName</td>
+                                                    <td>@item.CheckInDate</td>
+                                                    <td>@item.CheckOutDate</td>
+                                                    <td>@item.Days</td>
+                                                    <td>@item.SubTotal</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <!-- 表格部分 -->
+            </div>
+        </div>
+    </div>
+</div>
